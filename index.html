@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Primary Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friendify - Create Fun Friendship Wishes & Quizzes | Share With Friends</title>
+  <meta name="description" content="Generate personalized friendship wishes, take fun friendship quizzes, and share your results. Perfect for best friends to celebrate their bond and create shareable content.">
+  <meta name="keywords" content="friendship wishes, friendship quiz, best friend test, social media sharing, viral friendship app, friendship score">
+  <meta name="author" content="Friendify Team">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://friendify.app/">
+  <meta property="og:title" content="Friendify - Create & Share Friendship Wishes">
+  <meta property="og:description" content="Generate fun friendship wishes and quizzes to share with your best friends. Try our viral friendship test today!">
+  <meta property="og:image" content="https://friendify.app/images/social-preview.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://friendify.app/">
+  <meta property="twitter:title" content="Friendify - Create & Share Friendship Wishes">
+  <meta property="twitter:description" content="Generate fun friendship wishes and quizzes to share with your best friends. Try our viral friendship test today!">
+  <meta property="twitter:image" content="https://friendify.app/images/social-preview.jpg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://friendify.app/">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  
+  <!-- Preload important resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-YOUR_ADSENSE_ID",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+  <style>
+    :root {
+      --primary: #805AD5;
+      --secondary: #D53F8C;
+      --bg-light: linear-gradient(to bottom, #FED7E2, #E9D8FD);
+      --bg-dark: linear-gradient(to bottom, #1A202C, #2D3748);
+      --card-light: white;
+      --card-dark: #2D3748;
+      --text-light: #1A202C;
+      --text-dark: #F7FAFC;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: all 0.3s ease;
+      line-height: 1.6;
+    }
+    
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header Styles */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 2.2rem;
+      margin: 20px 0 10px;
+      background: linear-gradient(to right, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+    
+    .tagline {
+      color: #718096;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    
+    .dark .tagline {
+      color: #A0AEC0;
+    }
+    
+    /* Card Styles */
+    .card {
+      background: var(--card-light);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+    }
+    
+    .dark .card {
+      background: var(--card-dark);
+    }
+    
+    /* Form Elements */
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 15px;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+    
+    .dark input {
+      border-color: #4A5568;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.2);
+    }
+    
+    button {
+      background: linear-gradient(to right, var(--secondary), var(--primary));
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Results Section */
+    .wish-result {
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .dark .wish-result {
+      background-color: rgba(45, 55, 72, 0.9);
+      border-color: #4A5568;
+    }
+    
+    /* Share Buttons */
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .share-buttons a {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    
+    .share-buttons a:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    /* Quiz Styles */
+    .quiz-container {
+      margin-top: 20px;
+      padding: 20px;
+      background: #EDF2F7;
+      border-radius: 12px;
+    }
+    
+    .dark .quiz-container {
+      background: #4A5568;
+    }
+    
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      padding: 16px 18px;
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid #E2E8F0;
+    }
+    
+    .dark .quiz-option {
+      background: #2D3748;
+      border-color: #4A5568;
+    }
+    
+    .quiz-option:hover {
+      border-color: var(--primary);
+    }
+    
+    .quiz-option input {
+      margin: 0 14px 0 0;
+      width: auto;
+      flex-shrink: 0;
+    }
+    
+    .quiz-option label {
+      flex: 1;
+      cursor: pointer;
+    }
+    
+    /* Leaderboard Styles */
+    .leaderboard {
+      margin-top: 30px;
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      min-width: 300px;
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #E2E8F0;
+    }
+    
+    .dark th, .dark td {
+      border-bottom: 1px solid #4A5568;
+    }
+    
+    th {
+      background-color: rgba(128, 90, 213, 0.1);
+      font-weight: 600;
+    }
+    
+    .dark th {
+      background-color: rgba(128, 90, 213, 0.2);
+    }
+    
+    /* Ad Containers */
+    .ad-container {
+      margin: 25px 0;
+      text-align: center;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .dark .ad-container {
+      background: #2D3748;
+    }
+    
+    .ad-label {
+      font-size: 0.8rem;
+      color: #718096;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    
+    .dark .ad-label {
+      color: #A0AEC0;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px 0;
+      color: #718096;
+      font-size: 0.9rem;
+    }
+    
+    .dark footer {
+      color: #A0AEC0;
+    }
+    
+    footer a {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 640px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      input, button {
+        padding: 14px;
+      }
+      
+      .quiz-option {
+        padding: 14px 16px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      
+      .wish-result {
+        font-size: 1.1rem;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+    
+    <header>
+      <h1>Friendify 🎉</h1>
+      <p class="tagline">Create & share fun friendship wishes with your best friends!</p>
+    </header>
+    
+    <main>
+      <div class="card">
+        <input type="text" id="userName" placeholder="Your name" aria-label="Your name">
+        <input type="text" id="friendName" placeholder="Friend's name" aria-label="Friend's name">
+        <button id="generateBtn">Generate Friendship Wish</button>
+        
+        <div id="wishResult" class="wish-result" style="display: none;"></div>
+        <div id="shareButtons" class="share-buttons" style="display: none;"></div>
+        
+        <button id="quizToggle" style="margin-top: 15px;">Take Friendship Quiz</button>
+      </div>
+      
+      <!-- Top Ad Unit -->
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+             data-ad-slot="YOUR_AD_SLOT_ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+      
+      <div id="quizContainer" class="quiz-container" style="display: none;"></div>
+      <div id="scoreResult" style="display: none;"></div>
+      
+      <!-- Middle Ad Unit -->
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+             data-ad-slot="YOUR_AD_SLOT_ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+      
+      <div class="leaderboard">
+        <h2>🏆 Top Friendships This Week 🏆</h2>
+        <table id="leaderboardTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Friends</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <tr>
+              <td colspan="3" style="text-align: center;">Loading leaderboard...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    
+    <footer>
+      <p>
+        <a href="/privacy">Privacy Policy</a> | 
+        <a href="/terms">Terms of Service</a> | 
+        <a href="/contact">Contact Us</a>
+      </p>
+      <p>© <span id="currentYear"></span> Friendify. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+      projectId: "YOUR_FIREBASE_PROJECT_ID",
+      storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+      appId: "YOUR_FIREBASE_APP_ID",
+      measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
+    };
+
+    // Initialize Firebase
+    if (firebaseConfig.apiKey !== "YOUR_FIREBASE_API_KEY") {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const analytics = firebase.analytics();
+    }
+
+    // DOM elements
+    const themeToggle = document.getElementById('themeToggle');
+    const generateBtn = document.getElementById('generateBtn');
+    const userNameInput = document.getElementById('userName');
+    const friendNameInput = document.getElementById('friendName');
+    const wishResult = document.getElementById('wishResult');
+    const shareButtons = document.getElementById('shareButtons');
+    const quizToggle = document.getElementById('quizToggle');
+    const quizContainer = document.getElementById('quizContainer');
+    const scoreResult = document.getElementById('scoreResult');
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    const currentYear = document.getElementById('currentYear');
+
+    // Set current year in footer
+    currentYear.textContent = new Date().getFullYear();
+
+    // Sample wishes
+    const wishes = [
+      "You're the avocado to my toast, {friend}! 🥑",
+      "{friend}, we go together like Netflix and chill! 🍿",
+      "To {friend}: Thanks for putting up with my nonsense! 🤪",
+      "Life without {friend} would be like a phone at 1% - stressful! 🔋",
+      "{friend}, you're the WiFi to my life! 📶",
+      "Our friendship is {random}% lit! 🔥",
+      "Roses are red, violets are blue, {friend}, no one compares to you! 🌹",
+      "{friend}, you're the human version of the 100 emoji! 💯",
+      "If best friends were a crime, {friend}, we'd be life partners in crime! 🚔",
+      "{friend}, you're the cheese to my macaroni! 🧀"
+    ];
+
+    // Quiz questions
+    const quizQuestions = [
+      {
+        question: "How often do you talk?",
+        options: ["Daily", "Weekly", "Monthly", "Yearly (but it's always lit)"]
+      },
+      {
+        question: "What's your favorite shared memory?",
+        options: ["That crazy trip", "Late night talks", "Inside jokes", "All of the above"]
+      },
+      {
+        question: "How well do you know each other's secrets?",
+        options: ["What secrets?", "Some", "All of them", "I AM the secret"]
+      },
+      {
+        question: "How do you settle disagreements?",
+        options: ["Fight then forget", "Deep convos", "Silent treatment", "We never disagree"]
+      },
+      {
+        question: "What's your friendship superpower?",
+        options: ["Always there", "Hype squad", "Brutal honesty", "Meme supply"]
+      }
+    ];
+
+    // Current state
+    let currentQuestion = 0;
+    let quizAnswers = [];
+
+    // Theme toggle
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('darkMode', isDark);
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    }
+
+    // Generate wish - FIXED INTERACTION
+    generateBtn.addEventListener('click', generateWish);
+    
+    function generateWish() {
+      const userName = userNameInput.value.trim();
+      const friendName = friendNameInput.value.trim();
+      
+      if (!userName || !friendName) {
+        alert('Please enter both names to generate a wish!');
+        return;
+      }
+      
+      const randomWish = wishes[Math.floor(Math.random() * wishes.length)]
+        .replace(/{friend}/g, friendName)
+        .replace(/{random}/, Math.floor(Math.random() * 100));
+      
+      wishResult.textContent = randomWish;
+      wishResult.style.display = 'block';
+      
+      // Create share buttons
+      shareButtons.innerHTML = `
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(`${userName} just Friendified ${friendName}: "${randomWish}" Try it with your friends!`)}" target="_blank" aria-label="Share on Facebook" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/facebook.svg" width="32" style="border-radius: 50%;" alt="Facebook" loading="lazy">
+        </a>
+        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`${userName} just Friendified ${friendName}: "${randomWish}" Try it with your friends! ${window.location.href}`)}" target="_blank" aria-label="Share on Twitter" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/twitter.svg" width="32" style="border-radius: 50%;" alt="Twitter" loading="lazy">
+        </a>
+        <a href="https://wa.me/?text=${encodeURIComponent(`${userName} just Friendified ${friendName}: "${randomWish}" Try it with your friends! ${window.location.href}`)}" target="_blank" aria-label="Share on WhatsApp" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/whatsapp.svg" width="32" style="border-radius: 50%;" alt="WhatsApp" loading="lazy">
+        </a>
+      `;
+      shareButtons.style.display = 'flex';
+      
+      // Show confetti
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    // Quiz toggle - FIXED INTERACTION
+    quizToggle.addEventListener('click', toggleQuiz);
+    
+    function toggleQuiz() {
+      const userName = userNameInput.value.trim();
+      const friendName = friendNameInput.value.trim();
+      
+      if (!userName || !friendName) {
+        alert('Please enter both names first!');
+        return;
+      }
+      
+      quizContainer.style.display = quizContainer.style.display === 'none' ? 'block' : 'none';
+      
+      if (quizContainer.style.display === 'block') {
+        startQuiz();
+      }
+    }
+
+    // Start quiz
+    function startQuiz() {
+      currentQuestion = 0;
+      quizAnswers = [];
+      renderQuestion();
+    }
+
+    // Render current question - FIXED INTERACTION
+    function renderQuestion() {
+      const question = quizQuestions[currentQuestion];
+      
+      quizContainer.innerHTML = `
+        <h3>Question ${currentQuestion + 1}/${quizQuestions.length}</h3>
+        <p>${question.question}</p>
+        <div class="quiz-options" id="quizOptions">
+          ${question.options.map((option, i) => `
+            <label class="quiz-option">
+              <input type="radio" name="quizOption" value="${option}" aria-label="${option}">
+              <span>${option}</span>
+            </label>
+          `).join('')}
+        </div>
+        <button id="quizNextBtn" disabled>
+          ${currentQuestion < quizQuestions.length - 1 ? 'Next Question' : 'See Results'}
+        </button>
+      `;
+      
+      // Add event listeners
+      const options = document.querySelectorAll('.quiz-option input');
+      const nextBtn = document.getElementById('quizNextBtn');
+      
+      options.forEach(option => {
+        option.addEventListener('change', function() {
+          nextBtn.disabled = false;
+          // Highlight selected option
+          document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.style.borderColor = opt.querySelector('input').checked ? '#805AD5' : '#E2E8F0';
+          });
+        });
+      });
+      
+      nextBtn.addEventListener('click', nextQuestion);
+    }
+
+    function nextQuestion() {
+      const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+      
+      if (!selectedOption) return;
+      
+      quizAnswers.pu
