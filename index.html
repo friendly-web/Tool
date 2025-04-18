@@ -675,4 +675,93 @@
       
       if (!selectedOption) return;
       
-      quizAnswers.pu
+      quizAnswers.push(selectedOption.value);
+      
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        calculateScore();
+      }
+    }
+
+    // Calculate quiz score
+    function calculateScore() {
+      const userName = userNameInput.value.trim();
+      const friendName = friendNameInput.value.trim();
+      const score = Math.min(100, quizAnswers.length * 20 + Math.floor(Math.random() * 20));
+      
+      scoreResult.innerHTML = `
+        <div class="card">
+          <h3>${userName} & ${friendName}'s Friendship Score: ${score}% 🏆</h3>
+          <p>${getScoreMessage(score)}</p>
+          <div class="share-buttons" style="margin-top: 15px;">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(`Our friendship score is ${score}%! Take the quiz at ${window.location.href}`)}" target="_blank" aria-label="Share on Facebook" rel="noopener">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/facebook.svg" width="32" style="border-radius: 50%;" alt="Facebook" loading="lazy">
+            </a>
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Our friendship score is ${score}%! Take the quiz at ${window.location.href}`)}" target="_blank" aria-label="Share on Twitter" rel="noopener">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/twitter.svg" width="32" style="border-radius: 50%;" alt="Twitter" loading="lazy">
+            </a>
+          </div>
+        </div>
+      `;
+      scoreResult.style.display = 'block';
+      
+      // Scroll to results
+      scoreResult.scrollIntoView({ behavior: 'smooth' });
+      
+      // Show celebration confetti
+      if (score > 80) {
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    // Get score message
+    function getScoreMessage(score) {
+      if (score >= 90) return "Bestie goals! You two are inseparable! 💖";
+      if (score >= 70) return "Great friendship! You understand each other well. 😊";
+      if (score >= 50) return "Good connection! There's room to grow closer. 👍";
+      return "New friendship? Keep nurturing your bond! 🌱";
+    }
+
+    // Load leaderboard
+    function loadLeaderboard() {
+      // Simulated leaderboard data
+      const leaderboardData = [
+        { user: "Alex", friend: "Jordan", score: 98 },
+        { user: "Taylor", friend: "Casey", score: 95 },
+        { user: "Morgan", friend: "Riley", score: 92 },
+        { user: "Jamie", friend: "Quinn", score: 89 },
+        { user: "Dakota", friend: "Skyler", score: 87 }
+      ];
+      
+      leaderboardBody.innerHTML = leaderboardData.map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.user} & ${item.friend}</td>
+          <td>${item.score}%</td>
+        </tr>
+      `).join('');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set up AdSense ads
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.log("AdSense error:", e);
+      }
+      
+      // Load initial data
+      loadLeaderboard();
+      userNameInput.focus();
+    });
+  </script>
+</body>
+</html>
